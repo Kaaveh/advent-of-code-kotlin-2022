@@ -28,18 +28,7 @@ fun main() {
             }
         }
 
-        elfList.sortDescending()
-
-        var total = 0
-        repeat(3) {
-            if (elfList.isNotEmpty()){
-                total += elfList[0]
-                elfList.removeAt(0)
-            }
-        }
-
-
-        return total
+        return elfList.sortedDescending().take(3).sum()
     }
 
     val input = readInput("Day01")
