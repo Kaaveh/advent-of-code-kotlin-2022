@@ -1,15 +1,46 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        val elfList = mutableListOf<Int>()
+        var tmp = 0
+
+        input.forEach { item ->
+            if (item.isEmpty()) {
+                elfList.add(tmp)
+                tmp = 0
+            } else {
+                tmp += item.toInt()
+            }
+        }
+
+        return elfList.max()
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
-    }
+        val elfList = mutableListOf<Int>()
+        var tmp = 0
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+        input.forEach { item ->
+            if (item.isEmpty()) {
+                elfList.add(tmp)
+                tmp = 0
+            } else {
+                tmp += item.toInt()
+            }
+        }
+
+        elfList.sortDescending()
+
+        var total = 0
+        repeat(3) {
+            if (elfList.isNotEmpty()){
+                total += elfList[0]
+                elfList.removeAt(0)
+            }
+        }
+
+
+        return total
+    }
 
     val input = readInput("Day01")
     println(part1(input))
