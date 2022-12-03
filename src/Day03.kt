@@ -6,13 +6,7 @@ fun main() {
             val first = items.substring(0 until items.length / 2)
             val second = items.substring(items.length / 2 until items.length)
 
-            var common = 'a'
-            for (i in first.indices) {
-                for (j in second.indices) {
-                    if (first[i] == second[j])
-                        common = first[i]
-                }
-            }
+            val common = first.first { it in second }
 
             if (common.isLowerCase()) {
                 priorityScore.add(
@@ -37,16 +31,7 @@ fun main() {
             val second = input[3 * x + 1]
             val third = input[3 * x + 2]
 
-            var common = 'a'
-            for (i in first.indices) {
-                for (j in second.indices) {
-                    for (k in third.indices) {
-                        if (first[i] == second[j])
-                            if (first[i] == third[k])
-                                common = first[i]
-                    }
-                }
-            }
+            val common = first.first { it in second && it in third }
 
             if (common.isLowerCase()) {
                 priorityScore.add(
@@ -57,8 +42,6 @@ fun main() {
                     common - 'A' + 27
                 )
             }
-
-
         }
 
         return priorityScore.sum()
