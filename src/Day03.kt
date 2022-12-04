@@ -1,50 +1,25 @@
-fun main() {
-    fun part1(input: List<String>): Int {
-        val priorityScore = mutableListOf<Int>()
+val Char.priority
+    get(): Int {
+        return if (this.isLowerCase()) {
+            this - 'a' + 1
 
-        input.forEach { items ->
-            val first = items.substring(0 until items.length / 2)
-            val second = items.substring(items.length / 2 until items.length)
-
-            val common = first.first { it in second }
-
-            if (common.isLowerCase()) {
-                priorityScore.add(
-                    common - 'a' + 1
-                )
-            } else {
-                priorityScore.add(
-                    common - 'A' + 27
-                )
-            }
+        } else {
+            this - 'A' + 27
         }
-
-        return priorityScore.sum()
     }
 
-    fun part2(input: List<String>): Int {
+fun main() {
 
-        val priorityScore = mutableListOf<Int>()
+    fun part1(input: List<String>): Int = input.sumOf { items ->
+        val first = items.substring(0 until items.length / 2)
+        val second = items.substring(items.length / 2)
+        val common = first.first { it in second }
+        common.priority
+    }
 
-        for (x in 0 until input.size / 3) {
-            val first = input[3 * x]
-            val second = input[3 * x + 1]
-            val third = input[3 * x + 2]
-
-            val common = first.first { it in second && it in third }
-
-            if (common.isLowerCase()) {
-                priorityScore.add(
-                    common - 'a' + 1
-                )
-            } else {
-                priorityScore.add(
-                    common - 'A' + 27
-                )
-            }
-        }
-
-        return priorityScore.sum()
+    fun part2(input: List<String>): Int = input.chunked(3).sumOf { elfGroup ->
+        val common = elfGroup[0].first { it in elfGroup[1] && it in elfGroup[2] }
+        common.priority
     }
 
     val testInput = readInput("Day03_test")
