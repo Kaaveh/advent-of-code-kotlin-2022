@@ -8,14 +8,14 @@ val Char.priority
 inline infix fun String.singleIntersect(other: String) = (toSet() intersect other.toSet()).single()
 inline infix fun Char.singleIntersect(other: String) = (setOf(this) intersect other.toSet()).single()
 
-fun part1(input: List<String>): Int = input.sumOf { items ->
+private fun part1(input: List<String>): Int = input.sumOf { items ->
     val first = items.substring(0 until items.length / 2)
     val second = items.substring(items.length / 2)
     val common = first singleIntersect second
     common.priority
 }
 
-fun part2(input: List<String>): Int = input.chunked(3).sumOf { elfGroup ->
+private fun part2(input: List<String>): Int = input.chunked(3).sumOf { elfGroup ->
     val (first, second, third) = elfGroup
     val common = first singleIntersect second singleIntersect third
     common.priority
