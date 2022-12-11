@@ -5,47 +5,61 @@ private fun part1(input: List<String>): Int {
     var iteration = 20
 
     input.forEach { command ->
-        when (command) {
-            "noop" -> {
-                clock++
-                if (clock == iteration) {
-                    total += iteration * x
-                    iteration += 40
-                }
-            }
+        clock++
+        if (clock == iteration) {
+            total += iteration * x
+            iteration += 40
+        }
 
-            else -> {
-                val newValue = command.substringAfter(" ").toInt()
-                clock++
-                if (clock == iteration) {
-                    total += iteration * x
-                    iteration += 40
-                }
-                clock++
-                if (clock == iteration) {
-                    total += iteration * x
-                    iteration += 40
-                }
-                x += newValue
+        if (command != "noop") {
+            val newValue = command.substringAfter(" ").toInt()
+            clock++
+            if (clock == iteration) {
+                total += iteration * x
+                iteration += 40
             }
+            x += newValue
         }
     }
 
     return total
 }
 
-private fun part2(input: List<String>): Int {
-    var max = 0
+private fun part2(input: List<String>) {
+    var x = 1
+    var clock = 1
 
-    return max
+    input.forEach { command ->
+        printPixel(index = clock - 1, x = x)
+        clock++
+
+        if (command != "noop") {
+            printPixel(index = clock - 1, x = x)
+            clock++
+            val newValue = command.substringAfter(" ").toInt()
+            x += newValue
+        }
+    }
+
+}
+
+private fun printPixel(index: Int, x: Int) {
+    val adjustedIndex: Int = index % 40
+    if (adjustedIndex == 0) {
+        println()
+    }
+    if (adjustedIndex in x - 1..x + 1) {
+        print("#")
+    } else {
+        print(".")
+    }
 }
 
 fun main() {
     val testInput = readInput("Day10_test")
     check(part1(testInput) == 13140)
-//    check(part2(testInput) == 8)
 
     val input = readInput("Day10")
     println(part1(input))
-//    println(part2(input))
+    println(part2(input))
 }
